@@ -25,7 +25,7 @@ TypeError: a must be an integer
 >>> add_integer(2.3, None)
 Traceback (most recent call last):
     ...
-TypeError: a must be an integer
+TypeError: b must be an integer
 >>> add_integer("hello", "you")
 Traceback (most recent call last):
     ...
