@@ -1,25 +1,73 @@
 >>> text_indentation = __import__('5-text_indentation').text_indentation
 
->>> text_indentation("Hello. What's up? Good: Bad.")
-Hello.
-<BLANKLINE>
-What's up?
-<BLANKLINE>
-Good:
-<BLANKLINE>
-Bad.
-<BLANKLINE>
->>> text_indentation("No special chars here")
-No special chars here
+>>> text_indentation = __import__('5-text_indentation').text_indentation
+>>> text_indentation("Bonjour!")
+Bonjour!
 
->>> text_indentation(" Trim spaces after punctuation.   Keep going!")
- Trim spaces after punctuation.
+>>> text_indentation("   Python est cool.")
+   Python est cool.
 <BLANKLINE>
-Keep going!
 
->>> text_indentation(123)
+>>> text_indentation("Salut: Comment ça va?")
+Salut:
+<BLANKLINE>
+Comment ça va?
+<BLANKLINE>
+
+>>> text_indentation("   Voici un test.  Il doit fonctionner?")
+   Voici un test.
+<BLANKLINE>
+Il doit fonctionner?
+<BLANKLINE>
+
+>>> text_indentation("Attention:     il y a des espaces.")
+Attention:
+<BLANKLINE>
+il y a des espaces.
+<BLANKLINE>
+
+>>> text_indentation("Pas de ponctuation spéciale ici")
+Pas de ponctuation spéciale ici
+
+>>> text_indentation("Ligne\nsuivante sans ponctuation")
+Ligne
+suivante sans ponctuation
+
+>>> text_indentation("Ligne1. Ligne2\nLigne3? Ligne4:")
+Ligne1.
+<BLANKLINE>
+Ligne2
+Ligne3?
+<BLANKLINE>
+Ligne4:
+<BLANKLINE>
+
+>>> text_indentation("\n\n Début avec sauts de ligne.")
+<BLANKLINE>
+<BLANKLINE>
+ Début avec sauts de ligne.
+<BLANKLINE>
+
+>>> text_indentation("Combo : un test. Ensuite? et encore:  fin.")
+Combo :
+<BLANKLINE>
+un test.
+<BLANKLINE>
+Ensuite?
+<BLANKLINE>
+et encore:
+<BLANKLINE>
+fin.
+<BLANKLINE>
+
+>>> text_indentation(42)
 Traceback (most recent call last):
 TypeError: text must be a string
 
->>> text_indentation("No ending period, what bad grammar")
-No ending period, what bad grammar
+>>> text_indentation(['une', 'liste'])
+Traceback (most recent call last):
+TypeError: text must be a string
+
+>>> text_indentation(None)
+Traceback (most recent call last):
+TypeError: text must be a string
