@@ -1,70 +1,78 @@
 >>> text_indentation = __import__('5-text_indentation').text_indentation
 
->>> text_indentation = __import__('5-text_indentation').text_indentation
->>> text_indentation("Bonjour!")
-Bonjour!
-
->>> text_indentation("   Python est cool.")
-   Python est cool.
+>>> text_indentation("Are you ready?")
+Are you ready?
 <BLANKLINE>
 
->>> text_indentation("Salut: Comment ça va?")
-Salut:
+>>> text_indentation("Yes! Let's begin: with confidence.")
+Yes! Let's begin:
 <BLANKLINE>
-Comment ça va?
-<BLANKLINE>
-
->>> text_indentation("   Voici un test.  Il doit fonctionner?")
-   Voici un test.
-<BLANKLINE>
-Il doit fonctionner?
+with confidence.
 <BLANKLINE>
 
->>> text_indentation("Attention:     il y a des espaces.")
-Attention:
-<BLANKLINE>
-il y a des espaces.
+>>> text_indentation("  Just testing leading spaces.")
+  Just testing leading spaces.
 <BLANKLINE>
 
->>> text_indentation("Pas de ponctuation spéciale ici")
-Pas de ponctuation spéciale ici
+>>> text_indentation("Ending with nothing new")
+Ending with nothing new
 
->>> text_indentation("Ligne\nsuivante sans ponctuation")
-Ligne
-suivante sans ponctuation
-
->>> text_indentation("Ligne1. Ligne2\nLigne3? Ligne4:")
-Ligne1.
+>>> text_indentation("   This:  should work.  Right?")
+   This:
 <BLANKLINE>
-Ligne2
-Ligne3?
+should work.
 <BLANKLINE>
-Ligne4:
+Right?
 <BLANKLINE>
 
->>> text_indentation("\n\n Début avec sauts de ligne.")
+>>> text_indentation("Line one.\nLine two.\nLine three.")
+Line one.
 <BLANKLINE>
 <BLANKLINE>
- Début avec sauts de ligne.
+Line two.
+<BLANKLINE>
+<BLANKLINE>
+Line three.
 <BLANKLINE>
 
->>> text_indentation("Combo : un test. Ensuite? et encore:  fin.")
-Combo :
+>>> text_indentation("\n\nBegin after blanks.")
 <BLANKLINE>
-un test.
 <BLANKLINE>
-Ensuite?
+Begin after blanks.
 <BLANKLINE>
-et encore:
+
+>>> text_indentation("Multiple:markers?yes.this is it")
+Multiple:
 <BLANKLINE>
-fin.
+markers?
 <BLANKLINE>
+yes.
+<BLANKLINE>
+this is it
+
+>>> text_indentation("  Hello.  \n  Again: here?")
+  Hello.
+<BLANKLINE>
+<BLANKLINE>
+  Again:
+<BLANKLINE>
+here?
+<BLANKLINE>
+
+>>> text_indentation("abc:def.ghi?jkl")
+abc:
+<BLANKLINE>
+def.
+<BLANKLINE>
+ghi?
+<BLANKLINE>
+jkl
 
 >>> text_indentation(42)
 Traceback (most recent call last):
 TypeError: text must be a string
 
->>> text_indentation(['une', 'liste'])
+>>> text_indentation(["not", "a", "string"])
 Traceback (most recent call last):
 TypeError: text must be a string
 
