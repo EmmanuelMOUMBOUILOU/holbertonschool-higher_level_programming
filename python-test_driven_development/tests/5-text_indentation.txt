@@ -3,7 +3,7 @@
 Bonjour!
 
 >>> text_indentation("   Python est cool.")
-   Python est cool.
+Python est cool.
 <BLANKLINE>
 
 >>> text_indentation("Salut: Comment ça va?")
@@ -13,7 +13,7 @@ Comment ça va?
 <BLANKLINE>
 
 >>> text_indentation("   Voici un test.  Il doit fonctionner?")
-   Voici un test.
+Voici un test.
 <BLANKLINE>
 Il doit fonctionner?
 <BLANKLINE>
