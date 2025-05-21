@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""Defines a class Rectangle with printable and recreatable string representation."""
+"""Defines a class Rectangle with printable
+    and recreatable string representation."""
 
 
 class Rectangle:
