@@ -47,7 +47,7 @@ Traceback (most recent call last):
             ...
 TypeError: age must be an integer
 
->>> bg.area(5)
+>>> bg.integer_validator("name", 1, 2)
 Traceback (most recent call last):
             ...
-TypeError: BaseGeometry.area() takes 1 positional argument but 2 were given
+TypeError: BaseGeometry.integer_validator() takes 3 positional arguments but 4 were given
