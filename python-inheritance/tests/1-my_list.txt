@@ -62,3 +62,10 @@ AttributeError: 'list' object has no attribute 'print_sorted'
 [4]
 >>> print(my_list)
 [4]
+
+--------------------------------
+
+>>> a = []
+>>> my_list = MyList(a)
+>>> my_list.print_sorted()
+[]
