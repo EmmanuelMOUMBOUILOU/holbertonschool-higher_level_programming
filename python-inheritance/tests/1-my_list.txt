@@ -1,0 +1,26 @@
+# TEST 1: Vérifie que MyList hérite bien de list
+>>> MyList = __import__('1-my_list').MyList
+>>> isinstance(MyList(), list)
+True
+
+# TEST 2: Vérifie que la liste est affichée triée sans modifier l'originale
+>>> my_list = MyList()
+>>> my_list.append(5)
+>>> my_list.append(1)
+>>> my_list.append(3)
+>>> print(my_list)
+[5, 1, 3]
+>>> my_list.print_sorted()
+[1, 3, 5]
+>>> print(my_list)
+[5, 1, 3]
+
+# TEST 3: Ajouter d'autres éléments et revérifier
+>>> my_list.append(2)
+>>> my_list.append(4)
+>>> print(my_list)
+[5, 1, 3, 2, 4]
+>>> my_list.print_sorted()
+[1, 2, 3, 4, 5]
+>>> print(my_list)
+[5, 1, 3, 2, 4]
