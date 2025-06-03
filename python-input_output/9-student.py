@@ -1,6 +1,9 @@
 #!/usr/bin/python3
+"""Defines a class Student with serialization capability."""
+
+
 class Student:
-    """Defines a student with first name, last name, and age."""
+    """Represents a student."""
 
     def __init__(self, first_name, last_name, age):
         """Initialize a new Student instance."""
@@ -9,5 +12,5 @@ class Student:
         self.age = age
 
     def to_json(self):
-        """Return a dictionary representation of the Student."""
+        """Return the dictionary representation of the Student."""
         return self.__dict__
