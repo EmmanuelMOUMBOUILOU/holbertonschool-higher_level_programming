@@ -7,7 +7,9 @@ import sys
 
 
 def main():
-    """Connects to MySQL and fetches states matching the given name."""
+    """Connects to a MySQL database and retrieves states
+      that match a given name,
+    ensuring results are sorted by id in ascending order."""
     username, password, db_name, state_name = sys.argv[1:5]
 
     db = MySQLdb.connect(
@@ -19,12 +21,13 @@ def main():
     )
 
     cursor = db.cursor()
+    safe_name = state_name.replace("'", "''")
 
     query = (
         "SELECT * FROM states "
         "WHERE name = '{}' "
         "ORDER BY id ASC"
-    ).format(state_name)
+    ).format(safe_name)
 
     cursor.execute(query)
 
