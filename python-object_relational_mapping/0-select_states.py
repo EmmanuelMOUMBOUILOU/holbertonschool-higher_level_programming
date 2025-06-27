@@ -4,26 +4,24 @@
 import MySQLdb
 import sys
 
-if __name__ == "__main__":
-    # Connexion à la BDD
-    db = MySQLdb.connect(
-        host="localhost",
-        user=sys.argv[1],
-        passwd=sys.argv[2],
-        db=sys.argv[3],
-        port=3306
-    )
 
-    cur = db.cursor()
+def main():
 
-    # Exécuter la requête
-    cur.execute("SELECT * FROM states ORDER BY id ASC")
+    username, password, db_name = sys.argv[1], sys.argv[2], sys.argv[3]
 
-    # Récupérer et afficher les résultats
-    rows = cur.fetchall()
-    for row in rows:
-        print(row)
+    db = MySQLdb.connect(host="localhost", port=3306, user=username,
+                         passwd=password, db=db_name)
 
-    # Fermer la connexion
-    cur.close()
+    cursor = db.cursor()
+
+    cursor.execute("SELECT * FROM states ORDER BY id ASC")
+
+    states = cursor.fetchall()
+    for state in states:
+        print(state)
+
+    cursor.close()
     db.close()
+
+if __name__ == "__main__":
+    main()
