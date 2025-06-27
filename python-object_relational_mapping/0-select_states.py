@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""
+Lists all states where name matches the argument, from the database hbtn_0e_0_usa
+Safe against SQL injection
+"""
 import MySQLdb
 import sys
 
