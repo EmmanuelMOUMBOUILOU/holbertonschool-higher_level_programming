@@ -20,13 +20,17 @@ def main():
 
     cur = db.cursor()
 
-    cur.execute(
+    # Escape single quotes and use format as required
+    safe_name = state_name.replace("'", "''")
+    query = (
         "SELECT * FROM states "
-        "WHERE name = %s "
-        "ORDER BY id ASC", (sys.argv[4],)
-    )
+        "WHERE name = '{}' "
+        "ORDER BY id ASC"
+    ).format(safe_name)
 
-    for row in cursor.fetchall():
+    cur.execute(query)
+
+    for row in cur.fetchall():
         print(row)
 
     cur.close()
