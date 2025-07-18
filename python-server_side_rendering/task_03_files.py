@@ -3,7 +3,9 @@ import json
 import csv
 import sqlite3
 
+
 app = Flask(__name__)
+
 
 def load_json_data():
     try:
