@@ -1,8 +1,10 @@
 import os
 import logging
 
+
 # Configure basic logging
 logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
+
 
 def generate_invitations(template, attendees):
     # Vérification du type des entrées
