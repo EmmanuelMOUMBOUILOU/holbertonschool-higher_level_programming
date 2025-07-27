@@ -1,43 +1,88 @@
+from flask import Flask, render_template, request
+import json
+import csv
+import sqlite3
 import os
-import logging
 
+app = Flask(__name__)
 
-# Configure basic logging
-logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
+@app.route('/products')
+def products():
+    source = request.args.get('source')
+    data = []
+    error = None
 
-
-def generate_invitations(template, attendees):
-    # Vérification du type des entrées
-    if not isinstance(template, str):
-        logging.error("Invalid input: template must be a string.")
-        return
-    if not isinstance(attendees, list) or not all(isinstance(item, dict) for item in attendees):
-        logging.error("Invalid input: attendees must be a list of dictionaries.")
-        return
-
-    # Vérification du contenu vide
-    if not template.strip():
-        logging.error("Template is empty, no output files generated.")
-        return
-
-    if not attendees:
-        logging.info("No data provided, no output files generated.")
-        return
-
-    # Traitement de chaque invité
-    for index, attendee in enumerate(attendees, start=1):
-        output = template
-        for key in ['name', 'event_title', 'event_date', 'event_location']:
-            value = attendee.get(key)
-            if value is None:
-                value = "N/A"
-            output = output.replace(f"{{{key}}}", str(value))
-
-        output_filename = f"output_{index}.txt"
-
+    if source == "json":
         try:
-            with open(output_filename, 'w') as f:
-                f.write(output)
-            logging.info(f"Generated {output_filename}")
+            with open("products.json", "r") as f:
+                data = json.load(f)
         except Exception as e:
-            logging.error(f"Failed to write file {output_filename}: {e}")
+            error = f"Error reading JSON: {e}"
+
+    elif source == "csv":
+        try:
+            with open("products.csv", newline='') as f:
+                reader = csv.DictReader(f)
+                data = list(reader)
+        except Exception as e:
+            error = f"Error reading CSV: {e}"
+
+    elif source == "sql":
+        try:
+            if not os.path.exists("products.db"):
+                raise FileNotFoundError("Database file not found.")
+            conn = sqlite3.connect("products.db")
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM Products")
+            rows = cursor.fetchall()
+            data = [dict(row) for row in rows]
+            conn.close()
+        except Exception as e:
+            error = f"Error reading SQLite DB: {e}"
+
+    else:
+        error = "Wrong source"
+
+    return render_template("product_display.html", products=data, error=error)
+
+# Optional: single product lookup
+@app.route('/products/<int:product_id>')
+def product_by_id(product_id):
+    source = request.args.get('source')
+    product = None
+    error = None
+
+    try:
+        if source == "sql":
+            conn = sqlite3.connect("products.db")
+            conn.row_factory = sqlite3.Row
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM Products WHERE id=?", (product_id,))
+            row = cursor.fetchone()
+            if row:
+                product = dict(row)
+            conn.close()
+        elif source == "json":
+            with open("products.json", "r") as f:
+                all_products = json.load(f)
+                for item in all_products:
+                    if int(item["id"]) == product_id:
+                        product = item
+                        break
+        elif source == "csv":
+            with open("products.csv", newline='') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    if int(row["id"]) == product_id:
+                        product = row
+                        break
+        else:
+            error = "Wrong source"
+    except Exception as e:
+        error = f"Error retrieving product: {e}"
+
+    return render_template("product_display.html", products=[product] if product else [], error=error)
+
+if __name__ == '__main__':
+    app.run(debug=True)
