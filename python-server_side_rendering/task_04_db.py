@@ -47,6 +47,8 @@ def products():
             conn.close()
         else:
             error = "Wrong source"
+        if product_id:
+            error = "Product not found"
     except Exception as e:
         error = f"Error loading data: {e}"
 
