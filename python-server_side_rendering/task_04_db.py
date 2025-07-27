@@ -9,42 +9,49 @@ app = Flask(__name__)
 @app.route('/products')
 def products():
     source = request.args.get('source')
+    product_id = request.args.get('id')  # <-- Add this
     data = []
     error = None
 
-    if source == "json":
-        try:
+    try:
+        if source == "json":
             with open("products.json", "r") as f:
-                data = json.load(f)
-        except Exception as e:
-            error = f"Error reading JSON: {e}"
+                all_products = json.load(f)
+                if product_id:
+                    data = [p for p in all_products if str(p["id"]) == str(product_id)]
+                else:
+                    data = all_products
 
-    elif source == "csv":
-        try:
+        elif source == "csv":
             with open("products.csv", newline='') as f:
                 reader = csv.DictReader(f)
-                data = list(reader)
-        except Exception as e:
-            error = f"Error reading CSV: {e}"
+                if product_id:
+                    data = [row for row in reader if row["id"] == str(product_id)]
+                else:
+                    data = list(reader)
 
-    elif source == "sql":
-        try:
+        elif source == "sql":
             if not os.path.exists("products.db"):
-                raise FileNotFoundError("Database file not found.")
+                raise FileNotFoundError("Database not found.")
             conn = sqlite3.connect("products.db")
             conn.row_factory = sqlite3.Row
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM Products")
+
+            if product_id:
+                cursor.execute("SELECT * FROM Products WHERE id = ?", (product_id,))
+            else:
+                cursor.execute("SELECT * FROM Products")
+
             rows = cursor.fetchall()
             data = [dict(row) for row in rows]
             conn.close()
-        except Exception as e:
-            error = f"Error reading SQLite DB: {e}"
-
-    else:
-        error = "Wrong source"
+        else:
+            error = "Wrong source"
+    except Exception as e:
+        error = f"Error loading data: {e}"
 
     return render_template("product_display.html", products=data, error=error)
+
 
 # Optional: single product lookup
 @app.route('/products/<int:product_id>')
